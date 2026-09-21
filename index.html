@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Backend Development Internship - Seminar Presentation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .deck-container {
+            width: 100%;
+            max-width: 1100px;
+            height: 720px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            padding: 48px 56px;
+            height: 100%;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Large Header Styling */
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #020617;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 34px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 24px;
+            border-bottom: 3px solid #0284c7;
+            padding-bottom: 10px;
+        }
+
+        p, li {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        ul {
+            margin-left: 28px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 14px;
+        }
+
+        li strong {
+            color: #020617;
+            font-weight: 700;
+        }
+
+        /* Large High-Contrast Code Boxes */
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px 24px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-x: auto;
+            border: 1px solid #334155;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .keyword { color: #38bdf8; font-weight: bold; }
+        .string { color: #4ade80; }
+        .variable { color: #f43f5e; }
+        .comment { color: #94a3b8; font-style: italic; }
+
+        /* Slide Specific Layouts */
+        .title-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        }
+
+        .title-slide h1 {
+            font-size: 50px;
+            color: #020617;
+            margin-bottom: 20px;
+        }
+
+        .title-slide h3 {
+            font-size: 26px;
+            color: #0369a1;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border: 1px solid #bae6fd;
+        }
+
+        .tool-card {
+            background: #f8fafc;
+            border-left: 6px solid #0284c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Controls Footer */
+        .footer-controls {
+            height: 70px;
+            background-color: #f8fafc;
+            border-top: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .nav-btn {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: #0369a1;
+        }
+
+        .nav-btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 18px;
+            font-weight: 700;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+<div class="deck-container">
+    
+    <!-- SLIDE 1: TITLE SLIDE -->
+    <div class="slide title-slide active">
+        <h1>PHP Backend Development Internship</h1>
+        <h3>Building Scalable Web Applications & Data Pipelines</h3>
+        <p style="max-width: 800px; font-size: 22px; color: #334155;">
+            A complete overview of server-side architecture, relational databases, local development stacks, and dynamic CRUD implementations.
+        </p>
+        <div class="badge-container">
+            <span class="badge">SERVER-SIDE LOGIC</span>
+            <span class="badge">DATABASE ARCHITECTURE</span>
+            <span class="badge">SECURITY BEST PRACTICES</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: ENVIRONMENT OVERVIEW -->
+    <div class="slide">
+        <h2>01. Development Environment & Stack Overview</h2>
+        <p style="margin-bottom: 20px;">
+            Setting up a local development stack is essential for building, testing, and debugging server-side applications offline before deployment.
+        </p>
+        <ul>
+            <li><strong>Server-Side Execution Environment:</strong> PHP code cannot be executed directly by client browsers. It requires a local web server (Apache) to interpret scripts.</li>
+            <li><strong>Relational Storage Link:</strong> Local database engines allow fast query iteration and schema design without live cloud dependencies.</li>
+            <li><strong>Integrated Toolchain:</strong> Combining Apache, MySQL, VS Code, and reverse engineering utilities builds a robust local pipeline.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 3: XAMPP STACK -->
+    <div class="slide">
+        <h2>02. Web Server & Database Engine: XAMPP</h2>
+        <div class="tool-card">
+            <p><strong>XAMPP</strong> is an open-source local server stack bundling Apache, MySQL/MariaDB, PHP, and Perl into a unified environment.</p>
+        </div>
+        <ul>
+            <li><strong>Apache HTTP Server:</strong> Intercepts incoming HTTP requests from the browser, processes PHP scripts, and returns standard dynamic HTML.</li>
+            <li><strong>MySQL Database Engine:</strong> Manages relational data storage, executes SQL queries, and enforces foreign key constraints.</li>
+            <li><strong>Internship Role:</strong> Served as the foundation for local backend testing, eliminating external hosting dependencies during development.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 4: PHPMYADMIN -->
+    <div class="slide">
+        <h2>03. Database GUI Administration: phpMyAdmin</h2>
+        <div class="tool-card">
+            <p><strong>phpMyAdmin</strong> provides a clean web-based graphical interface for inspecting, managing, and querying MySQL databases visually.</p>
+        </div>
+        <ul>
+            <li><strong>Visual Schema Management:</strong> Allows visual creation of databases, tables, column data types (`INT`, `VARCHAR`), and primary key bindings.</li>
+            <li><strong>Direct Query Execution:</strong> Enables running raw SQL queries directly in the UI to verify dynamic inserts and updates.</li>
+            <li><strong>Internship Role:</strong> Used to design the <code>data</code> database schema and verify table updates in real time.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 5: VS CODE -->
+    <div class="slide">
+        <h2>04. Code Editing Environment: Visual Studio Code</h2>
+        <div class="tool-card">
+            <p><strong>VS Code</strong> is a lightweight, extensible code editor configured with PHP linters and syntax checkers.</p>
+        </div>
+        <ul>
+            <li><strong>PHP Extensions & Linting:</strong> Highlights syntax bugs, unclosed brackets, and missing variables in real time.</li>
+            <li><strong>Integrated Terminal:</strong> Used for directory navigation, command execution, and monitoring server logs.</li>
+            <li><strong>Internship Role:</strong> Main editor for authoring modular PHP files (`conn.php`, `webpage.php`, `update.php`) and HTML templates.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 6: HTTRACK -->
+    <div class="slide">
+        <h2>05. Asset Extraction & Mirroring: HTTrack</h2>
+        <div class="tool-card">
+            <p><strong>HTTrack Website Copier</strong> is an offline browser utility used to mirror and extract static website structures and assets.</p>
+        </div>
+        <ul>
+            <li><strong>Template Deconstruction:</strong> Captured pre-rendered public layouts to examine CSS styling and structural patterns.</li>
+            <li><strong>Static-to-Dynamic Conversion:</strong> Converted hardcoded HTML templates into reusable PHP components (`header.php`, dynamic forms).</li>
+            <li><strong>Workflow Acceleration:</strong> Bypassed repetitive client-side CSS design to concentrate development time on backend security and database logic.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 7: CONN.PHP -->
+    <div class="slide">
+        <h2>06. Centralized Database Connection</h2>
+        <p>Establishes a single centralized connection script (`conn.php`) included across all endpoints via <code>include('conn.php')</code>.</p>
+<pre><code><span class="keyword">&lt;?php</span>
+<span class="variable">$server</span>   = <span class="string">"localhost"</span>;
+<span class="variable">$username</span> = <span class="string">"root"</span>;
+<span class="variable">$passwd</span>   = <span class="string">""</span>;
+<span class="variable">$dbname</span>   = <span class="string">"data"</span>;
+
+<span class="comment">// Establish link to MySQL database</span>
+<span class="variable">$conn</span> = mysqli_connect(<span class="variable">$server</span>, <span class="variable">$username</span>, <span class="variable">$passwd</span>, <span class="variable">$dbname</span>);
+
+<span class="keyword">if</span> (!<span class="variable">$conn</span>) {
+    <span class="keyword">echo</span> <span class="string">"Connection failed: "</span> . mysqli_connect_error();
+}
+<span class="keyword">?&gt;</span></code></pre>
+    </div>
+
+    <!-- SLIDE 8: WEBPAGE.PHP (CREATE) -->
+    <div class="slide">
+        <h2>07. Ingestion & Insertion (webpage.php)</h2>
+        <p>Captures HTTP <code>POST</code> form data and commits user inputs to the database.</p>
+<pre><code><span class="keyword">&lt;?php</span> include(<span class="string">'conn.php'</span>); <span class="keyword">?&gt;</span>
+&lt;form method="POST"&gt;
+    &lt;input type="text" name="name"&gt;
+    &lt;input type="number" name="age"&gt;
+    &lt;input type="text" name="dept"&gt;
+    &lt;input type="submit" name="done" value="Submit"&gt;
+&lt;/form&gt;
+
+<span class="keyword">&lt;?php</span>
+<span class="keyword">if</span> (isset(<span class="variable">$_POST</span>[<span class="string">'done'</span>])) {
+    <span class="variable">$name</span> = <span class="variable">$_POST</span>[<span class="string">'name'</span>];
+    <span class="variable">$age</span>  = <span class="variable">$_POST</span>[<span class="string">'age'</span>];
+    <span class="variable">$dept</span> = <span class="variable">$_POST</span>[<span class="string">'dept'</span>];
+
+    <span class="variable">$insert</span> = mysqli_query(<span class="variable">$conn</span>, 
+        <span class="string">"INSERT INTO student(name, age, dept) VALUES('$name', '$age', '$dept')"</span>);
+}
+<span class="keyword">?&gt;</span></code></pre>
+    </div>
+
+    <!-- SLIDE 9: VIEW.PHP (READ) -->
+    <div class="slide">
+        <h2>08. Dynamic Record Fetching (view.php)</h2>
+        <p>Queries dynamic rows using <code>SELECT *</code> and renders HTML table rows in a loop.</p>
+<pre><code>&lt;table border="1"&gt;
+    &lt;tr&gt;&lt;th&gt;S.No&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Dept&lt;/th&gt;&lt;/tr&gt;
+    <span class="keyword">&lt;?php</span>
+    include(<span class="string">'conn.php'</span>);
+    <span class="variable">$result</span> = mysqli_query(<span class="variable">$conn</span>, <span class="string">"SELECT * FROM student;"</span>);
+    <span class="variable">$count</span> = 1;
+
+    <span class="keyword">while</span> (<span class="variable">$row</span> = mysqli_fetch_assoc(<span class="variable">$result</span>)) { <span class="keyword">?&gt;</span>
+        &lt;tr&gt;
+            &lt;td&gt;<span class="keyword">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$count</span>++; <span class="keyword">?&gt;</span>&lt;/td&gt;
+            &lt;td&gt;<span class="keyword">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$row</span>[<span class="string">'name'</span>]; <span class="keyword">?&gt;</span>&lt;/td&gt;
+            &lt;td&gt;<span class="keyword">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$row</span>[<span class="string">'age'</span>]; <span class="keyword">?&gt;</span>&lt;/td&gt;
+            &lt;td&gt;<span class="keyword">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$row</span>[<span class="string">'dept'</span>]; <span class="keyword">?&gt;</span>&lt;/td&gt;
+        &lt;/tr&gt;
+    <span class="keyword">&lt;?php</span> } <span class="keyword">?&gt;</span>
+&lt;/table&gt;</code></pre>
+    </div>
+
+    <!-- SLIDE 10: UPDATE.PHP (UPDATE) -->
+    <div class="slide">
+        <h2>09. Targeted Record Mutation (update.php)</h2>
+        <p>Modifies existing records by primary key (`id`). Replaced incorrect bracket syntax with clean PHP variable binding.</p>
+<pre><code><span class="keyword">&lt;?php</span>
+include(<span class="string">'conn.php'</span>);
+
+<span class="keyword">if</span> (isset(<span class="variable">$_POST</span>[<span class="string">'update'</span>])) {
+    <span class="variable">$id</span>   = <span class="variable">$_POST</span>[<span class="string">'id'</span>];
+    <span class="variable">$name</span> = <span class="variable">$_POST</span>[<span class="string">'name'</span>];
+    <span class="variable">$age</span>  = <span class="variable">$_POST</span>[<span class="string">'age'</span>];
+    <span class="variable">$dept</span> = <span class="variable">$_POST</span>[<span class="string">'dept'</span>];
+
+    <span class="comment">// Clean variable binding without bracket errors</span>
+    <span class="variable">$update</span> = mysqli_query(<span class="variable">$conn</span>, 
+        <span class="string">"UPDATE student SET name='$name', age='$age', dept='$dept' WHERE id='$id'"</span>);
+}
+<span class="keyword">?&gt;</span></code></pre>
+    </div>
+
+    <!-- SLIDE 11: SECURITY -->
+    <div class="slide">
+        <h2>10. Security & Defense Best Practices</h2>
+        <ul>
+            <li><strong>Preventing SQL Injection (SQLi):</strong> Transition from string concatenation to PDO/MySQLi Prepared Statements with bound parameters (`$stmt->bind_param()`).</li>
+            <li><strong>Cross-Site Scripting (XSS) Defense:</strong> Sanitize dynamic output with <code>htmlspecialchars()</code> before rendering dynamic strings into HTML markup.</li>
+            <li><strong>Credential Protection:</strong> Store user passwords securely using <code>password_hash()</code> and verify them using <code>password_verify()</code>.</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 12: CONCLUSION -->
+    <div class="slide">
+        <h2>11. Key Learning Takeaways</h2>
+        <ul>
+            <li><strong>Full-Stack Conversion:</strong> Successfully converted static HTML/CSS templates into dynamic PHP server-side workflows.</li>
+            <li><strong>Toolchain Proficiency:</strong> Mastered local server setup (XAMPP/Apache), visual database tools (phpMyAdmin), and editor workflows (VS Code).</li>
+            <li><strong>Backend Competency:</strong> Built functional CRUD pipelines, dynamic loops, and form-handling mechanisms with a focus on database security.</li>
+        </ul>
+    </div>
+
+    <!-- CONTROLS FOOTER -->
+    <div class="footer-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>Previous</button>
+        <span class="slide-counter" id="slideCounter">Slide 1 of 12</span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const slideCounter = document.getElementById('slideCounter');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        slideCounter.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') {
+            changeSlide(1);
+        } else if (e.key === 'ArrowLeft') {
+            changeSlide(-1);
+        }
+    });
+</script>
+
+</body>
+</html>
